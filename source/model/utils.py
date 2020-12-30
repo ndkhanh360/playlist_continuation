@@ -1,3 +1,6 @@
+import numpy as np
+import random
+
 def generate_playlists(pd_tracks, pd_playlists, nums_playlists_to_test = 100):
   choose_playlist = random.choices(np.arange(pd_playlists.shape[0]), k = nums_playlists_to_test)
 

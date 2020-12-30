@@ -1,9 +1,12 @@
 import numpy as np
+import random
 
 # This is one of the metrics that can be used to understand the precision of the recommendation
 def r_precision(prediction, validation):
-    score = len(list(set(lst1) & set(lst2)))/len(validation)
-    return score
+	prediction = list(set(prediction))
+	validation = list(set(validation))
+	score = len(list(set(prediction) & set(validation)))/len(validation)
+	return score
 
 ### NDCG Code Source: https://gist.github.com/bwhite/3726239
 def dcg_at_k(r, k, method=0):
