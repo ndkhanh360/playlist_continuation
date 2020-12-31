@@ -11,18 +11,17 @@ Team members:
 
 ---
 **Table of content**
-* Đề tài
-* Cấu trúc folder 
-* Thu thập dữ liệu 
-* Mô tả dữ liệu và EDA 
-* Xây dựng mô hình 
-* Phân công công việc 
-* Tổng quan kết quả 
-* Hướng dẫn chạy 
-
+* [Problem Statement](#problem-statement)
+* [Folder Structure](#folder-structure) 
+* [Data Collection](#data-collection)
+* [Data Description and EDA](#data-description-and-eda) 
+* [Modelling](#modelling)
+* [Task Assignment](#task-assignment)
+* [Results](#results)
+* [Instructions](#instructions)
 --- 
 
-## Đề tài 
+## Problem Statement 
 ### Giới thiệu đề tài 
 *Automatic Playlist Continuation* là bài toán gợi ý những bài hát tương tự, phù hợp với một tập hợp những bài hát cho trước. Những bài hát được đánh giá "phù hợp" đôi khi mang nghĩa khá rộng, có thể những bài hát này cùng nghệ sĩ, cùng thể loại, cùng tính chất âm nhạc hay cũng có thể mang cùng ý nghĩa,... Vì tính mở của bài toán nên đây là một lĩnh vực nhận được sự chú ý của nhiều nhà nghiên cứu trong lĩnh vực âm nhạc. 
 
@@ -35,7 +34,7 @@ Bài toán đặt ra được ứng dụng để gợi ý những bài hát phù
 
 Vì tính thực tiễn và ứng dụng của bài toán, Spotify đã tổ chức [RecSys 2018 Challenge](https://recsys.acm.org/recsys18/challenge/) để mọi người trên thế giới cùng tham gia giải quyết bài toán. 
 
-## Cấu trúc folder 
+## Folder Structure 
 
 ```
 playlist_continuation/
@@ -63,7 +62,7 @@ playlist_continuation/
 
 ```
   
-## Thu thập dữ liệu 
+## Data Collection 
 Dữ liệu sử dụng trong đồ án này được thu thập sử dụng:
 
 * [spotipy](https://spotipy.readthedocs.io/en/2.16.1/) - thư viện Python giúp truy cập [Spotify Web API](https://developer.spotify.com/documentation/web-api/) một cách tiện lợi .
@@ -81,7 +80,7 @@ Cụ thể, các dữ liệu thu thập được (chứa trong folder `data`) ba
 
 Chi tiết quá trình thu thập dữ liệu có thể xem tại notebook `EDA.ipynb` hoặc file `EDA.html` (recommended).
 
-## Mô tả dữ liệu và EDA 
+## Data Description and EDA 
 ### Tổng quan dữ liệu 
 #### Bảng dữ liệu playlist (1412 dòng, 5 cột)
 
@@ -141,7 +140,7 @@ Chi tiết quá trình thu thập dữ liệu có thể xem tại notebook `EDA.
 | num_followers     | int             | Số người theo dõi                      | 368                                  |
 | monthly_listeners | int             | Số người nghe mỗi tháng                | 1509                                 |
 
-### Khám phá dữ liệu (EDA)
+### EDA 
 
 Chi tiết quá trình EDA có thể xem tại notebook `EDA.ipynb` hoặc file `EDA.html` (recommended).
 
@@ -246,7 +245,7 @@ Ta thấy hầu hết các bài hát đều có độ dài từ 180-240s (3-4 ph
 - `loudness` và `energy` có mối tương quan dương: một bài hát càng có cường độ lớn thường sẽ mang nhiều năng lượng 
 - `instrumentalness` và `loudness` có tương quan âm: bài hát không lời (có instrumentalness lớn) thường sẽ nhẹ nhàng
 
-## Xây dựng mô hình 
+## Modelling 
 ### Độ đo đánh giá 
 Độ đo sử dụng để đánh giá mô hình là **R-precision** được tính bởi công thức:
 $$ \text{R-precision} = \frac{| G \cap R|}{|G|} $$
@@ -255,7 +254,7 @@ trong đó:
 * $R$: tập những bài hát dự đoán (retrieved)
 
 ### Các mô hình sử dụng 
-Mô tả các mô hình sau đây ứng với input có **N** seed tracks, và cần dự đoán **K** bài hát gợi ý. 
+Mô tả các mô hình sau đây ứng với input có **N** seed tracks, và cần dự đoán **K** bài hát gợi ý. Do số lượng các bài hát trong hơn 1000 playlists thu thập được rất lớn (hơn 60000 bài) dẫn đến việc chạy các mô hình mất rất nhiều thời gian. Do đó, các mô hình được sử dụng chỉ chạy thực nghiệm trên 100 playlist được chọn ngẫu nhiên từ tập các playlist trong dataset thu được. 
 
 #### 1. Baseline model
 
@@ -292,7 +291,7 @@ Mô tả các mô hình sau đây ứng với input có **N** seed tracks, và c
     * Phân cụm tất cả các bài hát thành **k** cụm sử dụng thuật toán K-means clustering, chọn giá trị **k** sử dụng phương pháp khuỷu tay (*elbow method*).
     * Với tập hợp các seed tracks, ta chọn 1 cluster chứa nhiều seed tracks nhất. Sau khi chọn được cluster, ta sẽ sắp xếp các tracks theo thứ tự giảm dần của thuộc tính `popularity` và chọn **K** bài hát có giá trị `popularity` cao nhất làm kết quả dự đoán. 
     
-## Phân công công việc 
+## Task assignment 
 
 | Công việc                              | Phân công                           | Mức độ hoàn thành |
 | -------------------------------------- | ----------------------------------- |:----------------- |
@@ -304,7 +303,7 @@ Mô tả các mô hình sau đây ứng với input có **N** seed tracks, và c
 | Phân tích kết quả                      | Nguyễn Khánh Toàn                   | 100%              |
 | Báo cáo                                | Nguyễn Duy Khánh, Nguyễn Khánh Toàn | 100%              |
 
-## Tổng quan kết quả 
+## Results 
 ### Sơ lược kết quả các mô hình 
 
 TODO 
@@ -323,7 +322,7 @@ TODO
 - Chưa sử dụng được hết tất cả các thông tin thu thập được trong quá trình xây dựng mô hình (ví dụ những thông tin về nghệ sĩ) -> tìm cách kết hợp những thông tin này trong tương lai.
 - Các mô hình hiện tại còn đơn giản, chỉ mới chạy được trên dataset có kích thước nhỏ -> thử thêm các phương pháp trong recommendation (collaborative filtering, các phương pháp clustering nâng cao, ...) và những mô hình SOTA của challenge RecSys 2018, thử những thuật toán có độ phức tạp không quá lớn để chạy trên tập dữ liệu lớn hơn.
 
-## Hướng dẫn chạy 
+## Instructions 
 
 1. Clone repository và cài đặt dependencies:
 
@@ -352,3 +351,4 @@ Chạy các cells trong notebook `EDA.ipynb` từ trên xuống dưới.
 5. Mô hình hóa dữ liệu:
 
 Chạy các cells trong các notebooks ở folder `source/model/` theo thứ tự từ trên xuống dưới.
+
