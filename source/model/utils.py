@@ -7,7 +7,7 @@ def generate_playlists(pd_tracks, pd_playlists, nums_playlists_to_test = 100):
   playlist_id = []
 
   for playlist_index in choose_playlist:
-    if pd_playlists.iloc[playlist_index]['num_tracks'] >= 10:
+    if pd_tracks[pd_tracks['playlist_id'] == pd_playlists.iloc[playlist_index]['playlist_id']].shape[0] >= 50:
       playlist_id.append(pd_playlists.iloc[playlist_index]['playlist_id'])
 
   track_id_test = {}
