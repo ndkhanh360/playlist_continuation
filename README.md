@@ -142,6 +142,9 @@ Chi tiết quá trình thu thập dữ liệu có thể xem tại notebook `EDA.
 | monthly_listeners | int             | Số người nghe mỗi tháng                | 1509                                 |
 
 ### Khám phá dữ liệu (EDA)
+
+Chi tiết quá trình EDA có thể xem tại notebook `EDA.ipynb` hoặc file `EDA.html` (recommended).
+
 #### 1. Phân bố lượt theo dõi và số bài hát mỗi playlist:
 
 ![](images/playlist_followers.png)
@@ -183,10 +186,65 @@ Khác với những từ trong tên playlist, những từ phổ biến nhất �
 
 **Nhận xét:** Dựa vào các biểu đồ trên, ta nhận thấy distribution giá trị trung bình các thuộc tính `danceability`, `energy`, `key`, `loudness`, `mode`, `acousticness`, `liveness`, `valence`, `tempo`, `popularity` của các playlists phân bố rải rác (không quá tập trung) trong miền giá trị tương ứng và có độ lệch chuẩn (thể hiện qua box plot ở mỗi histogram) không quá nhỏ. Điều này cho thấy có sự khác biệt ở các thuộc tính trên giữa các playlists, có thể sử dụng chúng để dự đoán những bài hát liên quan đến một tập các bài hát cho trước.
 
+#### 7. Các nghệ sĩ có số lượng tracks nhiều nhất
+![](images/artist_most_tracks.png)
+
+**Nhận xét**: Những nghệ sĩ có nhiều bài hát nhất bao gồm cả những nghệ sĩ trẻ (Talor Swift, Ed Sheeran, ...), những nghệ sĩ lâu năm (The Beatles, Johnny Cash), công ty phát hành sách (Penton Overseas), nhà soạn nhạc (Beethoven). Đây đều là những tên tuổi hàng đầu được nhiều người biết đến.
+
+#### 8. Phân bố mức độ yêu thích/nổi tiếng (popularity) của các nghệ sĩ 
+![](images/artist_popularity.png)
+
+**Nhận xét:** ta thấy distribution mức độ nổi tiếng/yêu thích của các nghệ sĩ có hình dạng gần chuẩn.
+
+#### 9. Genre phổ biến mà các nghệ sĩ theo đuổi 
+![](images/artist_genres.png)
+
+**Nhận xét:** ta có thể thấy những genre phổ biến nhất là những (biến thể) của các thể loại *pop*, *rock*, *dance*, *rap*, ...
+
+#### 10. Thời lượng của các bài hát được phân bố như thế nào? 
+![](images/track_duration.png)
+
+**Nhận xét**:
+Ta thấy hầu hết các bài hát đều có độ dài từ 180-240s (3-4 phút)
+
+#### 11. Các thuộc tính liên quan đến tâm trạng bài hát (Danceability, Valence, Energy, Tempo) được phân bố như thế nào?
+![](images/track_mood_hist.png)
+
+**Nhận xét**:
+- Chỉ có thuộc tính `danceability` có phân bố gần chuẩn, các thuộc tính khác `valence`, `energy`, `tempo` có distribution phức tạp với nhiều modes 
+- Thuộc tính `tempo` có scale lớn hơn nhiều so với các thuộc tính còn lại, nên cần chú ý trong quá trình xây dựng mô hình
+- Cả 4 thuộc tính trên đều có các giá trị nằm rải rác trong miền giá trị của chúng, thể hiện sự đa dạng và phân bố khá liên tục của các bài hát.
+
+#### 12. Các thuộc tính liên quan đến đặc điểm bài hát (Loudness, Speechiness, Instrumentalness) được phân bố như thế nào?
+![](images/track_property_hist.png)
+
+**Nhận xét:**
+- Ta nhận thấy chỉ có thuộc tính `loudness` là có phân bố khá liên tục, các điểm dữ liệu không quá tập trung tại một vùng nào đó.
+- Khác với các thuộc tính ở trên, `speechiness` và `instrumentalness` có distribution với 2 cụm điểm tách biệt. Điều này phù hợp với ý nghĩa của các trường này: *speechiness* thể hiện một track là bài hát hay bài diễn thuyết, *instrumentalness* thể hiện một track có lời hay không lời. Mặc dù đây là 2 biến liên tục nhưng trong quá trình xây dựng mô hình, ta có thể xét ngưỡng để biến 2 biến này thành dạng rời rạc.
+
+#### 13. Các thuộc tính liên quan đến bối cảnh bài hát (Liveness, Acousticness) được phân bố như thế nào?
+![](images/track_context_hist.png)
+
+**Nhận xét**:
+- Thuộc tính `liveness` có phân bố tập trung hơn so với thuộc tính `acousticness`
+- `acousticness` có distribution với 2 mode 0 và 1, có lẽ phản ánh sự tách biệt giữa những bài hát thu âm và những bài hát được hát theo phong cách acoustic.
+
+#### 14. Số lượng quốc gia có thể nghe được của mỗi bài hát
+![](images/track_num_countries.png)
+
+**Nhận xét:** ta thấy hầu hết các bài hát đều available tại toàn bộ các quốc gia (có tất cả 92 quốc gia trong tập dữ liệu), hoặc chỉ available tại 1 quốc gia nhất định.
+
+#### 15. Tương quan giữa các thuộc tính Danceability, Valence, Energy, Tempo, Loudness, Speechiness, Instrumentalness, Liveness, Acousticness, Duration, Popularity
+![](images/track_correlation.png)
+
+**Nhận xét**: dựa vào heatmap trên, ta có thể đưa ra một vài nhận xét về tương quan giữa các biến:
+- `valence`, `danceability` và `energy` có mối tương quan dương (khá hợp lý vì đây là các thuộc tính thể hiện tính "nhún nhảy", tích cực và năng lượng của một bài hát)
+- `track_duration_ms` và `speechiness` có mối tương quan dương (0.3). Điều này có thể giải thích như sau: bài nói/thuyết trình (có speechiness lớn) thường dài hơn những bài hát thông thường.
+- `acousticness` có mối tương quan âm với `loudness` và `energy`: những bài hát acoustic thường không quá lớn tiếng và mang tính thư giãn, cảm nhận nhiều hơn
+- `loudness` và `energy` có mối tương quan dương: một bài hát càng có cường độ lớn thường sẽ mang nhiều năng lượng 
+- `instrumentalness` và `loudness` có tương quan âm: bài hát không lời (có instrumentalness lớn) thường sẽ nhẹ nhàng
+
 ## Xây dựng mô hình 
 ## Phân công công việc 
 ## Tổng quan kết quả 
 ## Hướng dẫn chạy 
-
-
-
