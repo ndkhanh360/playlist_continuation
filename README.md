@@ -245,6 +245,66 @@ Ta thấy hầu hết các bài hát đều có độ dài từ 180-240s (3-4 ph
 - `instrumentalness` và `loudness` có tương quan âm: bài hát không lời (có instrumentalness lớn) thường sẽ nhẹ nhàng
 
 ## Xây dựng mô hình 
+
+TODO 
+
 ## Phân công công việc 
+
+| Công việc                              | Phân công                           | Mức độ hoàn thành |
+| -------------------------------------- | ----------------------------------- |:----------------- |
+| Chuẩn bị mã nguồn thu thập dữ liệu     | Nguyễn Duy Khánh                    | 100%              |
+| Thu thập dữ liệu                       | Nguyễn Duy Khánh                    | 100%              |
+| EDA                                    | Nguyễn Duy Khánh, Nguyễn Khánh Toàn | 100%              |
+| Lên ý tưởng xây dựng mô hình           | Nguyễn Duy Khánh, Nguyễn Khánh Toàn | 100%              |
+| Xây dựng mô hình trên dữ liệu thu thập | Nguyễn Khánh Toàn                   | 100%              |
+| Phân tích kết quả                      | Nguyễn Khánh Toàn                   | 100%              |
+| Báo cáo                                | Nguyễn Duy Khánh, Nguyễn Khánh Toàn | 100%              |
+
 ## Tổng quan kết quả 
+### Sơ lược kết quả các mô hình 
+
+TODO 
+
+### Đánh giá yêu cầu đồ án
+
+- [x] Đặt ra được câu hỏi dự đoán 
+- [x] Giải quyết bài toán theo quy trình Khoa học dữ liệu 
+- [x] Dùng API để thu thập dữ liệu 
+- [x] Thu thập dữ liệu sử dụng HTML 
+- [x] Dùng mô hình máy học để mô hình hóa dữ liệu 
+
+### Hạn chế, hướng phát triển bài toán
+
+- Các playlist thu thập được hiện tại hoàn toàn là những playlist do Spotify tạo -> thu thập những playlist do do users tạo để tăng tính đa đạng.
+- Chưa sử dụng được hết tất cả các thông tin thu thập được trong quá trình xây dựng mô hình (ví dụ những thông tin về nghệ sĩ) -> tìm cách kết hợp những thông tin này trong tương lai.
+- Các mô hình hiện tại còn đơn giản, chỉ mới chạy được trên dataset có kích thước nhỏ -> thử thêm các phương pháp trong recommendation (collaborative filtering, các phương pháp clustering nâng cao, ...) và những mô hình SOTA của challenge RecSys 2018, thử những thuật toán có độ phức tạp không quá lớn để chạy trên tập dữ liệu lớn hơn.
+
 ## Hướng dẫn chạy 
+
+1. Clone repository và cài đặt dependencies:
+
+```
+git clone https://github.com/ndkhanh360/playlist_continuation.git
+pip install -r requirements.txt
+```
+
+2. Tạo tài khoản để lấy `CLIENT_ID` và `CLIENT_SECRET` sử dụng Spotify API:
+- Tạo tài khoản [Developer Spotify ](https://developer.spotify.com/dashboard/) và đăng nhập
+- Tạo App mới (`Create an app`)
+- Copy `CLIENT_ID` và `CLIENT_SECRET` 
+- Gán biến môi trường ở đầu file notebook `Crawling.ipynb`
+```
+os.environ['SPOTIPY_CLIENT_ID']=CLIENT_ID
+os.environ['SPOTIPY_CLIENT_SECRET']=CLIENT_SECRET
+```
+3. Thu thập dữ liệu:
+
+Chạy các cells trong notebook `Crawling.ipynb` từ trên xuống dưới.
+
+4. Khám phá dữ liệu:
+
+Chạy các cells trong notebook `EDA.ipynb` từ trên xuống dưới. 
+
+5. Mô hình hóa dữ liệu:
+
+Chạy các cells trong các notebooks ở folder `source/model/` theo thứ tự từ trên xuống dưới.
