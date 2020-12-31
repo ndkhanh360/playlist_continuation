@@ -1,1 +1,14 @@
 spotipy
+plotly
+pandas
+matplotlib
+requests_html
+tqdm
+numpy
+seaborn
+Pillow
+wordcloud
+plotly
+sklearn 
+lightgbm
+jupyter
