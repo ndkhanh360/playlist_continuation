@@ -336,7 +336,32 @@ Mô tả các mô hình sau đây ứng với input có **N** seed tracks, và c
 ## Results 
 ### Sơ lược kết quả các mô hình 
 
-TODO 
+Mỗi mô hình sẽ được thực nghiệm nhiều lần ứng với số lượng bài hát input và bài hát dự đoán khác nhau. Số lượng bài hát dự đoán được kiểm soát bởi tham số $fraction$ mang giá trị từ 2 đến 10. Cụ thể, với giá trị **fraction=f**, thì **1/f** playlist sẽ được dùng làm input, và mô hình sẽ phải dự đoán những bài hát còn lại.
+
+Bảng tóm tắt kết quả các mô hình theo độ đo **R-precision**: 
+
+|        | Baseline | Improved baseline | KNN   | Content filtering | k-means clustering |
+| ------ | -------- |:----------------- | ----- | ----------------- |:------------------ |
+| $f=2$  | 0.066    | 0.033             | 0.005 | **0.082**         | 0.026              |
+| $f=3$  | 0.079    | 0.024             | 0.010 | **0.129**         | 0.027              |
+| $f=4$  | 0.095    | 0.043             | 0.012 | **0.111**         | 0.050              |
+| $f=5$  | 0.091    | 0.061             | 0.009 | **0.127**         | 0.041              |
+| $f=6$  | 0.084    | 0.035             | 0.014 | **0.110**         | 0.045              |
+| $f=7$  | 0.093    | 0.051             | 0.015 | **0.148**         | 0.037              |
+| $f=8$  | 0.079    | 0.036             | 0.020 | **0.135**         | 0.059              |
+| $f=9$  | 0.107    | 0.037             | 0.016 | **0.117**         | 0.048              |
+| $f=10$ | 0.066    | 0.032             | 0.023 | **0.101**         | 0.062              |
+
+
+Biểu đồ so sánh kết quả của các mô hình: 
+
+![](images/results.png)
+
+**Nhận xét:** 
+
+* Dựa vào bảng kết quả và biểu đồ trên, ta nhận thấy mô hình **Content filtering** đạt kết quả tốt nhất, tốt hơn hẳn so với tất cả các mô hình còn lại. Kết quả trung bình **R-precision** của **Content filtering** là 0.11, đồng nghĩa với việc đề xuất đúng được 10% mỗi playlist (tất cả các mô hình được test trên tất cả 100 playlists).
+* Mô hình **Baseline** tuy đơn giản nhưng lại có hiệu quả khá bất ngờ, dự đoán đúng được trung bình khoảng 8% mỗi playlist. 
+* Ba mô hình còn lại là **Improve baseline**, **KNN**, **k-means clustering** tuy sử dụng thuật toán khá phức tạp nhưng kết quả **R-precision** lại không được như kỳ vọng. Tuy nhiên có thể kết hợp các phương pháp này lại, đặc biệt là với **Content filtering** để cho ra kết quả cao hơn, đây có thể là một hướng phát triển tốt có thể thử nghiệm trong tương lai.
 
 ### Đánh giá yêu cầu đồ án
 
