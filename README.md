@@ -11,31 +11,30 @@ Team members:
 
 ---
 **Table of content**
-* Đề tài
-* Cấu trúc folder 
-* Thu thập dữ liệu 
-* Mô tả dữ liệu và EDA 
-* Xây dựng mô hình 
-* Phân công công việc 
-* Tổng quan kết quả 
-* Hướng dẫn chạy 
-
+* [Problem Statement](#problem-statement)
+* [Folder Structure](#folder-structure) 
+* [Instructions](#instructions)
+* [Data Collection](#data-collection)
+* [Data Description and EDA](#data-description-and-eda) 
+* [Modelling](#modelling)
+* [Task Assignment](#task-assignment)
+* [Results](#results)
 --- 
 
-## Đề tài 
+## Problem Statement 
 ### Giới thiệu đề tài 
 *Automatic Playlist Continuation* là bài toán gợi ý những bài hát tương tự, phù hợp với một tập hợp những bài hát cho trước. Những bài hát được đánh giá "phù hợp" đôi khi mang nghĩa khá rộng, có thể những bài hát này cùng nghệ sĩ, cùng thể loại, cùng tính chất âm nhạc hay cũng có thể mang cùng ý nghĩa,... Vì tính mở của bài toán nên đây là một lĩnh vực nhận được sự chú ý của nhiều nhà nghiên cứu trong lĩnh vực âm nhạc. 
 
 Một cách rõ ràng hơn, bài toán được xác định với:
-* **Input**: một tập hợp các bài hát với những thuộc tính, đặc trưng cho trước 
-* **Output**: danh sách **N** bài hát được gợi ý liên quan đến những bài hát đã cho 
+* **Input**: một tập hợp **N** bài hát với những thuộc tính, đặc trưng cho trước 
+* **Output**: danh sách **K** bài hát được gợi ý liên quan đến những bài hát đã cho 
 
 ### Ứng dụng của đề tài trong thực tế 
 Bài toán đặt ra được ứng dụng để gợi ý những bài hát phù hợp với từng người dùng. Ví dụ [Spotify](https://www.spotify.com/us/) có tính năng tạo cho người dùng playlist `Weekly Discovery` hàng tuần dựa trên những bài hát họ nghe nhiều và yêu thích; hoặc tính năng gợi ý những bài hát phù hợp với một playlist do người dùng tạo ra `recommended based on what's in this playlist`.
 
 Vì tính thực tiễn và ứng dụng của bài toán, Spotify đã tổ chức [RecSys 2018 Challenge](https://recsys.acm.org/recsys18/challenge/) để mọi người trên thế giới cùng tham gia giải quyết bài toán. 
 
-## Cấu trúc folder 
+## Folder Structure 
 
 ```
 playlist_continuation/
@@ -62,8 +61,38 @@ playlist_continuation/
             └── EDA.ipynb - mã nguồn khám phá dữ liệu 
 
 ```
-  
-## Thu thập dữ liệu 
+
+## Instructions 
+
+1. Clone repository và cài đặt dependencies:
+
+```
+git clone https://github.com/ndkhanh360/playlist_continuation.git
+pip install -r requirements.txt
+```
+
+2. Tạo tài khoản để lấy `CLIENT_ID` và `CLIENT_SECRET` sử dụng Spotify API:
+- Tạo tài khoản [Developer Spotify ](https://developer.spotify.com/dashboard/) và đăng nhập
+- Tạo App mới (`Create an app`)
+- Copy `CLIENT_ID` và `CLIENT_SECRET` 
+- Gán biến môi trường ở đầu file notebook `Crawling.ipynb`
+```
+os.environ['SPOTIPY_CLIENT_ID']=CLIENT_ID
+os.environ['SPOTIPY_CLIENT_SECRET']=CLIENT_SECRET
+```
+3. Thu thập dữ liệu:
+
+Chạy các cells trong notebook `Crawling.ipynb` từ trên xuống dưới.
+
+4. Khám phá dữ liệu:
+
+Chạy các cells trong notebook `EDA.ipynb` từ trên xuống dưới. 
+
+5. Mô hình hóa dữ liệu:
+
+Chạy các cells trong các notebooks ở folder `source/model/` theo thứ tự từ trên xuống dưới.
+
+## Data Collection 
 Dữ liệu sử dụng trong đồ án này được thu thập sử dụng:
 
 * [spotipy](https://spotipy.readthedocs.io/en/2.16.1/) - thư viện Python giúp truy cập [Spotify Web API](https://developer.spotify.com/documentation/web-api/) một cách tiện lợi .
@@ -81,7 +110,7 @@ Cụ thể, các dữ liệu thu thập được (chứa trong folder `data`) ba
 
 Chi tiết quá trình thu thập dữ liệu có thể xem tại notebook `EDA.ipynb` hoặc file `EDA.html` (recommended).
 
-## Mô tả dữ liệu và EDA 
+## Data Description and EDA 
 ### Tổng quan dữ liệu 
 #### Bảng dữ liệu playlist (1412 dòng, 5 cột)
 
@@ -141,7 +170,7 @@ Chi tiết quá trình thu thập dữ liệu có thể xem tại notebook `EDA.
 | num_followers     | int             | Số người theo dõi                      | 368                                  |
 | monthly_listeners | int             | Số người nghe mỗi tháng                | 1509                                 |
 
-### Khám phá dữ liệu (EDA)
+### EDA 
 
 Chi tiết quá trình EDA có thể xem tại notebook `EDA.ipynb` hoặc file `EDA.html` (recommended).
 
@@ -177,7 +206,9 @@ Chi tiết quá trình EDA có thể xem tại notebook `EDA.ipynb` hoặc file 
 
 **Nhận xét**: 
 Dễ dàng nhận thấy những từ phổ biến nhất trong tên bài hát là những từ chỉ **thể loại** nhạc như *Rock, Pop, Metal, Classical, ...* hay những từ thể hiện **mục đích** của playlist như *Happy Birthday, Pride, Party, Work, Chill, ...* Những từ này được chọn vì nó thể hiện rõ ràng theme của playlist, dễ hình dung nội dung playlist khi đọc.
+
 ![](images/playlist_desc_wc.png)
+
 **Nhận xét:**
 Khác với những từ trong tên playlist, những từ phổ biến nhất để mô tả playlist là những từ mô tả **tập hợp, bài hát** như *collection, playlist, track, music, song* và những từ chỉ **thể loại** như *cover, rock, pop, classic, ...*
 
@@ -244,11 +275,53 @@ Ta thấy hầu hết các bài hát đều có độ dài từ 180-240s (3-4 ph
 - `loudness` và `energy` có mối tương quan dương: một bài hát càng có cường độ lớn thường sẽ mang nhiều năng lượng 
 - `instrumentalness` và `loudness` có tương quan âm: bài hát không lời (có instrumentalness lớn) thường sẽ nhẹ nhàng
 
-## Xây dựng mô hình 
+## Modelling 
+### Độ đo đánh giá 
+Độ đo sử dụng để đánh giá mô hình là **R-precision** được tính bởi công thức:
+$$ \text{R-precision} = \frac{| G \cap R|}{|G|} $$
+trong đó:
+* $G$: tập những bài hát được giữ lại (ground-truth)
+* $R$: tập những bài hát dự đoán (retrieved)
 
-TODO 
+### Các mô hình sử dụng 
+Mô tả các mô hình sau đây ứng với input có **N** seed tracks, và cần dự đoán **K** bài hát gợi ý. Do số lượng các bài hát trong hơn 1000 playlists thu thập được rất lớn (hơn 70000 bài) dẫn đến việc chạy các mô hình mất rất nhiều thời gian. Do đó, các mô hình được sử dụng chỉ chạy thực nghiệm trên 100 playlist được chọn ngẫu nhiên từ tập các playlist trong dataset. 
 
-## Phân công công việc 
+#### 1. Baseline model
+
+* **Thuộc tính**: dựa vào kết quả EDA, sử dụng 5 thuộc tính có phân phối gần chuẩn nhất bao gồm `danceability`, `energy`, `acousticness`, `valence`, `popularity`.
+* **Mô tả ý tưởng**:
+    * Tính **K** tracks trong tập hợp tất cả các tracks (trừ những seed tracks) có khoảng cách L2 gần nhất với từng seed track, ta được tập **N x K** tracks.
+    * Sort các tracks vừa tìm được theo tần suất xuất hiện và chọn **K** tracks xuất hiện nhiều nhất làm kết quả dự đoán.
+
+#### 2. Improved baseline model
+
+* **Thuộc tính**: chọn 5 features tốt nhất lấy từ 2 mô hình `LightGBM` và `ExtraTreesClassifier`.
+* **Mô tả ý tưởng**:
+    * Để chọn các features tốt nhất, ta đưa bài toán về dạng classification: với mỗi track, ta sẽ predict xem track đó thuộc playlist nào (chọn ngẫu nhiên 1 playlist nếu 1 track thuộc nhiều playlist) và xem đó như label của track; xây dựng 2 mô hình `LightGBM` và `ExtraTreesClassifier` dự đoán label cho các tracks; tính tổng feature importance từ 2 mô hình và chọn 5 features có độ quan trọng cao nhất.
+    * Sau khi chọn được features, ta thực hiện hoàn toàn tương tự baseline model để đưa ra gợi ý.
+    
+#### 3. KNN
+
+* **Thuộc tính**: lấy toàn bộ các thuộc tính số (numeric features) của các track làm đặc trưng.
+* **Mô tả ý tưởng**:
+    * Từ các vector biểu diễn **N** seed tracks, ta tính trung bình và được mean vector.
+    * Tìm **K** tracks trong tập hợp tất cả các tracks (trừ những seed tracks) có khoảng cách L2 gần nhất với mean vector làm kết quả dự đoán.
+    
+#### 4. Content filtering
+
+* **Thuộc tính**: lấy toàn bộ các thuộc tính số (numeric features) của các track làm đặc trưng.
+* **Mô tả ý tưởng**:
+    * Tính **K** tracks trong tập hợp tất cả các tracks (trừ những seed tracks) có khoảng cách cosine (cosine similarity) gần nhất với từng seed track, ta được tập **N x K** tracks.
+    * Sắp xếp các tracks vừa tìm được theo tần suất xuất hiện và chọn **K** tracks xuất hiện nhiều nhất làm kết quả dự đoán.
+    
+#### 5. k-means clustering
+
+* **Thuộc tính**: lấy toàn bộ các thuộc tính số (numeric features) của các track làm đặc trưng.
+* **Mô tả ý tưởng**:
+    * Phân cụm tất cả các bài hát thành **k** cụm sử dụng thuật toán K-means clustering, chọn giá trị **k** sử dụng phương pháp khuỷu tay (*elbow method*).
+    * Với tập hợp các seed tracks, ta chọn 1 cluster chứa nhiều seed tracks nhất. Sau khi chọn được cluster, ta sẽ sắp xếp các tracks theo thứ tự giảm dần của thuộc tính `popularity` và chọn **K** bài hát có giá trị `popularity` cao nhất làm kết quả dự đoán. 
+    
+## Task assignment 
 
 | Công việc                              | Phân công                           | Mức độ hoàn thành |
 | -------------------------------------- | ----------------------------------- |:----------------- |
@@ -260,7 +333,7 @@ TODO
 | Phân tích kết quả                      | Nguyễn Khánh Toàn                   | 100%              |
 | Báo cáo                                | Nguyễn Duy Khánh, Nguyễn Khánh Toàn | 100%              |
 
-## Tổng quan kết quả 
+## Results 
 ### Sơ lược kết quả các mô hình 
 
 TODO 
@@ -278,33 +351,3 @@ TODO
 - Các playlist thu thập được hiện tại hoàn toàn là những playlist do Spotify tạo -> thu thập những playlist do do users tạo để tăng tính đa đạng.
 - Chưa sử dụng được hết tất cả các thông tin thu thập được trong quá trình xây dựng mô hình (ví dụ những thông tin về nghệ sĩ) -> tìm cách kết hợp những thông tin này trong tương lai.
 - Các mô hình hiện tại còn đơn giản, chỉ mới chạy được trên dataset có kích thước nhỏ -> thử thêm các phương pháp trong recommendation (collaborative filtering, các phương pháp clustering nâng cao, ...) và những mô hình SOTA của challenge RecSys 2018, thử những thuật toán có độ phức tạp không quá lớn để chạy trên tập dữ liệu lớn hơn.
-
-## Hướng dẫn chạy 
-
-1. Clone repository và cài đặt dependencies:
-
-```
-git clone https://github.com/ndkhanh360/playlist_continuation.git
-pip install -r requirements.txt
-```
-
-2. Tạo tài khoản để lấy `CLIENT_ID` và `CLIENT_SECRET` sử dụng Spotify API:
-- Tạo tài khoản [Developer Spotify ](https://developer.spotify.com/dashboard/) và đăng nhập
-- Tạo App mới (`Create an app`)
-- Copy `CLIENT_ID` và `CLIENT_SECRET` 
-- Gán biến môi trường ở đầu file notebook `Crawling.ipynb`
-```
-os.environ['SPOTIPY_CLIENT_ID']=CLIENT_ID
-os.environ['SPOTIPY_CLIENT_SECRET']=CLIENT_SECRET
-```
-3. Thu thập dữ liệu:
-
-Chạy các cells trong notebook `Crawling.ipynb` từ trên xuống dưới.
-
-4. Khám phá dữ liệu:
-
-Chạy các cells trong notebook `EDA.ipynb` từ trên xuống dưới. 
-
-5. Mô hình hóa dữ liệu:
-
-Chạy các cells trong các notebooks ở folder `source/model/` theo thứ tự từ trên xuống dưới.
