@@ -3,11 +3,14 @@ Final project for the course Applied Data Science & Applications
 
 Faculty of Information Technology - University of Science, VNU-HCM
 
+**The better rendered version can be viewed at [this link](https://hackmd.io/@2sjWu8yHQISrPXLtS1TeKQ/Hknt4lo6D).**
+
 Team members: 
 | Student ID | Student name      |
 | ---------- |:----------------- |
 | 1712524    | Nguyễn Duy Khánh  |
 | 1712822    | Nguyễn Khánh Toàn |
+
 
 ---
 **Table of content**
