@@ -142,6 +142,13 @@ Chi tiết quá trình thu thập dữ liệu có thể xem tại notebook `EDA.
 | monthly_listeners | int             | Số người nghe mỗi tháng                | 1509                                 |
 
 ### Khám phá dữ liệu (EDA)
+1. Phân bố lượt theo dõi và số bài hát mỗi playlist:
+
+3. Các playlist có số lượng người theo dõi nhiều nhất
+4. Các playlist có số lượng tracks nhiều nhất
+5. Số lượng tracks của 20 playlist hot nhất
+6. Các từ được sử dụng nhiều nhất để đặt tên playlist và mô tả playlist
+7. Giá trị trung bình các thuộc tính số (numeric features) của các playlists phân bố như thế nào?
 
 ## Xây dựng mô hình 
 ## Phân công công việc 
