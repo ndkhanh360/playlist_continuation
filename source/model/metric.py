@@ -5,7 +5,7 @@ import random
 def r_precision(prediction, validation):
 	prediction = list(set(prediction))
 	validation = list(set(validation))
-	score = len(list(set(prediction) & set(validation)))/len(validation)
+	score = len(list(set(prediction) & set(validation))) / len(validation)
 	return score
 
 ### NDCG Code Source: https://gist.github.com/bwhite/3726239
